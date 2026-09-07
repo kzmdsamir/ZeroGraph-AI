@@ -1,6 +1,7 @@
 /**
  * ZeroGraph AI — SPA Router & FUI Command Center Orchestrator
  * Developer: kzsamir
+ * Direct Navigation Router with Animated Icon Integration & Search Bindings
  */
 
 const App = {
@@ -23,14 +24,20 @@ const App = {
         window.addEventListener('hashchange', () => this.handleRouting());
         this.handleRouting();
         this.updateTelemetry();
+        this.bindGlobalSearch();
         setInterval(() => this.updateTelemetry(), 15000);
+    },
+
+    navigateTo(routeKey) {
+        if (!this.routes[routeKey]) routeKey = 'executive';
+        window.location.hash = `#${routeKey}`;
+        this.handleRouting();
     },
 
     handleRouting() {
         let hash = window.location.hash.replace('#', '').trim();
         if (!hash || !this.routes[hash]) {
             hash = 'executive';
-            window.location.hash = '#executive';
         }
 
         const routeConfig = this.routes[hash];
@@ -50,9 +57,57 @@ const App = {
             }
         });
 
-        // Render page view module
+        // Render page view module safely
         if (routeConfig.module && typeof routeConfig.module.render === 'function') {
-            routeConfig.module.render();
+            try {
+                routeConfig.module.render();
+            } catch (err) {
+                console.error(`Error rendering page ${hash}:`, err);
+            }
+        }
+    },
+
+    toggleDetailPanel() {
+        const grid = document.getElementById('main-workspace-grid');
+        if (grid) {
+            grid.classList.toggle('panel-collapsed');
+        }
+    },
+
+    ensureDetailPanelOpen() {
+        const grid = document.getElementById('main-workspace-grid');
+        if (grid && grid.classList.contains('panel-collapsed')) {
+            grid.classList.remove('panel-collapsed');
+        }
+    },
+
+    openEvidenceDetail(msgId) {
+        this.ensureDetailPanelOpen();
+        EvidenceDrawer.open(msgId);
+    },
+
+    bindGlobalSearch() {
+        const searchInput = document.getElementById('global-search-input');
+        if (searchInput) {
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const q = searchInput.value.trim();
+                    if (q.startsWith('msg_') || q.startsWith('MSG_')) {
+                        this.openEvidenceDetail(q);
+                    } else if (q) {
+                        this.navigateTo('intelligence');
+                        setTimeout(() => {
+                            const intelInput = document.getElementById('intel-query-input');
+                            if (intelInput) {
+                                intelInput.value = q;
+                                if (typeof IntelligencePage.executeAnalysis === 'function') {
+                                    IntelligencePage.executeAnalysis();
+                                }
+                            }
+                        }, 100);
+                    }
+                }
+            });
         }
     },
 

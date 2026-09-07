@@ -30,18 +30,23 @@
                     <span class="status-dot-green"></span>
                     <span id="telemetry-model-name" style="color:#fff;">LIVE_CORE_ACTIVE</span>
                 </div>
+                <span style="color: var(--text-dim);">|</span>
+                <button class="fui-btn-icon" id="toggle-panel-btn" onclick="App.toggleDetailPanel()" title="Toggle Right Detail Panel">
+                    <svg class="fui-icon icon-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    TOGGLE PANEL
+                </button>
             </div>
         </header>
 
         <!-- Main 3-Column Command Center Workspace -->
-        <div class="workspace-grid">
+        <div class="workspace-grid" id="main-workspace-grid">
             
             <!-- Column 1: Left Navigation Sidebar (OPS_NAV) -->
             <aside class="sidebar-panel">
                 <div class="hud-box">
                     <div class="hud-box-header">
                         <span>■ OPS_NAV</span>
-                        <span style="color: var(--hud-green);">LINK.OK ●</span>
+                        <span style="color: var(--hud-green);"><span class="status-dot-green"></span>LINK.OK</span>
                     </div>
                     <div style="font-size:10px; color:var(--text-dim); text-transform:uppercase;">ACTIVE_NETWORK</div>
                     <div class="hud-box-title">ZeroGraph Workspace</div>
@@ -58,58 +63,110 @@
                     </div>
                 </div>
 
-                <div class="nav-section-label">OPERATIONS_NAV</div>
+                <!-- Cluster 1: CORE INTELLIGENCE -->
+                <div class="nav-cluster">
+                    <div class="nav-section-label">CORE INTELLIGENCE</div>
+                    <nav>
+                        <a href="#executive" class="nav-item active" data-route="executive" onclick="App.navigateTo('executive'); return false;">
+                            <span>
+                                <svg class="fui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                [ EXECUT_OVERVIEW ]
+                            </span>
+                            <span class="nav-tag">KPI</span>
+                        </a>
+                        <a href="#intelligence" class="nav-item" data-route="intelligence" onclick="App.navigateTo('intelligence'); return false;">
+                            <span>
+                                <svg class="fui-icon icon-scan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                                [ ASK_INTELLIGENCE ]
+                            </span>
+                            <span class="nav-tag">LLM</span>
+                        </a>
+                    </nav>
+                </div>
 
-                <nav>
-                    <a href="#executive" class="nav-item active" data-route="executive">
-                        <span>[ EXECUT_OVERVIEW ]</span>
-                        <span class="nav-tag">KPI</span>
-                    </a>
-                    <a href="#intelligence" class="nav-item" data-route="intelligence">
-                        <span>[ ASK_INTELLIGENCE ]</span>
-                        <span class="nav-tag">LLM</span>
-                    </a>
-                    <a href="#findings" class="nav-item" data-route="findings">
-                        <span>[ FINDINGS_REG ]</span>
-                        <span class="nav-tag">REG</span>
-                    </a>
-                    <a href="#risks" class="nav-item" data-route="risks">
-                        <span>[ RISK_MATRIX ]</span>
-                        <span class="nav-tag">MTX</span>
-                    </a>
-                    <a href="#actions" class="nav-item" data-route="actions">
-                        <span>[ ACTION_ITEMS ]</span>
-                        <span class="nav-tag">ACT</span>
-                    </a>
-                    <a href="#evidence" class="nav-item" data-route="evidence">
-                        <span>[ EVIDENCE_QUEUE ]</span>
-                        <span class="nav-tag">6914</span>
-                    </a>
-                    <a href="#timeline" class="nav-item" data-route="timeline">
-                        <span>[ TIMELINE_HUB ]</span>
-                        <span class="nav-tag">SEQ</span>
-                    </a>
-                    <a href="#quality" class="nav-item" data-route="quality">
-                        <span>[ DATA_QUALITY ]</span>
-                        <span class="nav-tag">AUD</span>
-                    </a>
-                    <a href="#health" class="nav-item" data-route="health">
-                        <span>[ SYSTEM_HEALTH ]</span>
-                        <span class="nav-tag">SYS</span>
-                    </a>
-                    <a href="#history" class="nav-item" data-route="history">
-                        <span>[ ANALYSIS_HIST ]</span>
-                        <span class="nav-tag">HASH</span>
-                    </a>
-                    <a href="#export" class="nav-item" data-route="export">
-                        <span>[ AUDIT_EXPORT ]</span>
-                        <span class="nav-tag">EXP</span>
-                    </a>
-                    <a href="#settings" class="nav-item" data-route="settings">
-                        <span>[ CONFIG_PANEL ]</span>
-                        <span class="nav-tag">CFG</span>
-                    </a>
-                </nav>
+                <!-- Cluster 2: AUDIT & GOVERNANCE -->
+                <div class="nav-cluster">
+                    <div class="nav-section-label">AUDIT & GOVERNANCE</div>
+                    <nav>
+                        <a href="#findings" class="nav-item" data-route="findings" onclick="App.navigateTo('findings'); return false;">
+                            <span>
+                                <svg class="fui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                [ FINDINGS_REG ]
+                            </span>
+                            <span class="nav-tag">REG</span>
+                        </a>
+                        <a href="#risks" class="nav-item" data-route="risks" onclick="App.navigateTo('risks'); return false;">
+                            <span>
+                                <svg class="fui-icon icon-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                [ RISK_MATRIX ]
+                            </span>
+                            <span class="nav-tag">MTX</span>
+                        </a>
+                        <a href="#actions" class="nav-item" data-route="actions" onclick="App.navigateTo('actions'); return false;">
+                            <span>
+                                <svg class="fui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                                [ ACTION_ITEMS ]
+                            </span>
+                            <span class="nav-tag">ACT</span>
+                        </a>
+                        <a href="#evidence" class="nav-item" data-route="evidence" onclick="App.navigateTo('evidence'); return false;">
+                            <span>
+                                <svg class="fui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                                [ EVIDENCE_QUEUE ]
+                            </span>
+                            <span class="nav-tag">6914</span>
+                        </a>
+                        <a href="#timeline" class="nav-item" data-route="timeline" onclick="App.navigateTo('timeline'); return false;">
+                            <span>
+                                <svg class="fui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                [ TIMELINE_HUB ]
+                            </span>
+                            <span class="nav-tag">SEQ</span>
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Cluster 3: SYSTEM TELEMETRY -->
+                <div class="nav-cluster">
+                    <div class="nav-section-label">SYSTEM TELEMETRY</div>
+                    <nav>
+                        <a href="#quality" class="nav-item" data-route="quality" onclick="App.navigateTo('quality'); return false;">
+                            <span>
+                                <svg class="fui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                [ DATA_QUALITY ]
+                            </span>
+                            <span class="nav-tag">AUD</span>
+                        </a>
+                        <a href="#health" class="nav-item" data-route="health" onclick="App.navigateTo('health'); return false;">
+                            <span>
+                                <svg class="fui-icon icon-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                [ SYSTEM_HEALTH ]
+                            </span>
+                            <span class="nav-tag">SYS</span>
+                        </a>
+                        <a href="#history" class="nav-item" data-route="history" onclick="App.navigateTo('history'); return false;">
+                            <span>
+                                <svg class="fui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                [ ANALYSIS_HIST ]
+                            </span>
+                            <span class="nav-tag">HASH</span>
+                        </a>
+                        <a href="#export" class="nav-item" data-route="export" onclick="App.navigateTo('export'); return false;">
+                            <span>
+                                <svg class="fui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                [ AUDIT_EXPORT ]
+                            </span>
+                            <span class="nav-tag">EXP</span>
+                        </a>
+                        <a href="#settings" class="nav-item" data-route="settings" onclick="App.navigateTo('settings'); return false;">
+                            <span>
+                                <svg class="fui-icon icon-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                                [ CONFIG_PANEL ]
+                            </span>
+                            <span class="nav-tag">CFG</span>
+                        </a>
+                    </nav>
+                </div>
             </aside>
 
             <!-- Column 2: Center Main Queue & Analysis Panel -->
@@ -140,7 +197,8 @@
             <aside class="detail-panel" id="detail-sidebar-container">
                 <div class="detail-header">
                     <div class="detail-title">
-                        <span>🔍 AUDIT_DETAIL</span>
+                        <svg class="fui-icon icon-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <span>AUDIT_DETAIL</span>
                     </div>
                     <span class="status-badge-white" id="detail-status-badge">ON TIME</span>
                 </div>
@@ -149,7 +207,7 @@
                     <div style="font-weight:700; font-size:14px; color:#fff; margin-bottom:8px;" id="detail-box-title">
                         LD-1300 / AUDIT_RUN_ACTIVE
                     </div>
-                    <div id="detail-box-body">
+                    <div id="detail-box-body" class="bengali-text">
                         Priority refrigerated operational context is verified from the North Hub consolidation center. Local inference telemetry confirms 100% air-gapped processing within the required parameters. Click any evidence citation or table row to inspect details.
                     </div>
                 </div>
