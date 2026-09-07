@@ -1,7 +1,7 @@
 /**
  * Page: Executive Overview / Audit Command Queue
  * Developer: kzsamir
- * Design: High-Tech FUI / Sci-Fi HUD Command Center
+ * Design: High-Tech FUI / Sci-Fi HUD Command Center (Mobile Responsive)
  */
 const ExecutivePage = {
     async render() {
@@ -30,7 +30,7 @@ const ExecutivePage = {
                         <button class="filter-pill">RISK</button>
                     </div>
 
-                    <div class="filter-group" style="margin-left:16px;">
+                    <div class="filter-group">
                         <span class="filter-label">CARRIER</span>
                         <select class="fui-select">
                             <option>ALL CHANNELS</option>
@@ -39,20 +39,20 @@ const ExecutivePage = {
                         </select>
                     </div>
 
-                    <div class="filter-group" style="margin-left:16px;">
+                    <div class="filter-group">
                         <span class="filter-label">STATE</span>
                         <button class="filter-pill active">ALL</button>
                         <button class="filter-pill">VERIFIED</button>
                         <button class="filter-pill">NEEDS REVIEW</button>
                     </div>
 
-                    <div style="margin-left:auto; font-size:11px; color:var(--text-dim);">
+                    <div class="desktop-only" style="margin-left:auto; font-size:11px; color:var(--text-dim);">
                         ACTIVE FILTERS: NONE
                     </div>
                 </div>
 
-                <!-- 4 Top FUI KPI Cards -->
-                <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; margin-bottom:20px;">
+                <!-- 4 Top FUI KPI Cards Grid -->
+                <div class="fui-kpi-grid">
                     ${Components.renderKPICard('Total Evidence', '6,914', 'VERIFIED LOGS')}
                     ${Components.renderKPICard('Open Findings', findings.length, 'NEEDS REVIEW')}
                     ${Components.renderKPICard('High-Risk Signals', findings.filter(f=>f.severity==='HIGH'||f.severity==='CRITICAL').length, 'CRITICAL ATTENTION')}
@@ -90,7 +90,7 @@ const ExecutivePage = {
                     </table>
                 </div>
 
-                <div style="display:flex; justify-content:space-between; margin-top:12px; font-size:10px; color:var(--text-dim);">
+                <div style="display:flex; justify-content:space-between; margin-top:12px; font-size:10px; color:var(--text-dim); flex-wrap:wrap; gap:8px;">
                     <div>RUN BY: KZSAMIR WORKSTATION PRO</div>
                     <div>HUB-2 - 2026</div>
                 </div>
@@ -118,6 +118,6 @@ const ExecutivePage = {
         `;
         if (badgeEl) badgeEl.textContent = "VERIFIED";
 
-        EvidenceDrawer.open(msgId);
+        App.openEvidenceDetail(msgId);
     }
 };

@@ -1,7 +1,7 @@
 /**
  * Page: Ask Intelligence
  * Developer: kzsamir
- * Style: Sci-Fi FUI HUD Monospace Technical UI
+ * Style: Sci-Fi FUI HUD Monospace Technical UI (Mobile Optimized)
  */
 const IntelligencePage = {
     async render() {
@@ -16,12 +16,12 @@ const IntelligencePage = {
 
                 <div style="margin-bottom:14px;">
                     <label class="filter-label" style="display:block; margin-bottom:6px;">ENTER AUDIT QUERY / OPERATIONAL OBJECTIVE (BENGALI OR ENGLISH)</label>
-                    <input type="text" id="intel-query-input" class="fui-input" style="background:#080808; border:1px solid var(--border-highlight); padding:12px;" placeholder="e.g. টিম মেম্বারদের কাজ বণ্টন এবং সিদ্ধান্ত গ্রহণের প্রক্রিয়া বিশ্লেষণ করুন" value="টিম মেম্বারদের কাজ বণ্টন এবং সিদ্ধান্ত গ্রহণের প্রক্রিয়া বিশ্লেষণ করুন">
+                    <textarea id="intel-query-input" class="fui-input" style="background:#080808; border:1px solid var(--border-highlight); padding:12px; width:100%; min-height:70px; resize:vertical; font-family:var(--font-mono); line-height:1.5;" placeholder="e.g. টিম মেম্বারদের কাজ বণ্টন এবং সিদ্ধান্ত গ্রহণের প্রক্রিয়া বিশ্লেষণ করুন">টিম মেম্বারদের কাজ বণ্টন এবং সিদ্ধান্ত গ্রহণের প্রক্রিয়া বিশ্লেষণ করুন</textarea>
                 </div>
 
-                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-bottom:16px;">
+                <div class="fui-form-grid" style="margin-bottom:16px;">
                     <div>
-                        <label class="filter-label">AUDIT MODE</label>
+                        <label class="filter-label" style="display:block; margin-bottom:4px;">AUDIT MODE</label>
                         <select id="intel-mode-select" class="fui-select" style="width:100%;">
                             <option value="persuasion" selected>Persuasion & Communication Analysis</option>
                             <option value="general">General Intelligence Query</option>
@@ -31,7 +31,7 @@ const IntelligencePage = {
                     </div>
 
                     <div>
-                        <label class="filter-label">TEMPERATURE</label>
+                        <label class="filter-label" style="display:block; margin-bottom:4px;">TEMPERATURE</label>
                         <select id="intel-temp-select" class="fui-select" style="width:100%;">
                             <option value="0.1">0.1 (Strict Audit)</option>
                             <option value="0.2" selected>0.2 (Balanced Default)</option>
@@ -39,7 +39,7 @@ const IntelligencePage = {
                     </div>
 
                     <div>
-                        <label class="filter-label">SEARCH DEPTH</label>
+                        <label class="filter-label" style="display:block; margin-bottom:4px;">SEARCH DEPTH</label>
                         <select id="intel-depth-select" class="fui-select" style="width:100%;">
                             <option value="12" selected>12 Evidence Records</option>
                             <option value="15">15 Deep Records</option>
@@ -48,7 +48,7 @@ const IntelligencePage = {
                 </div>
 
                 <div style="display:flex; justify-content:flex-end;">
-                    <button id="run-intel-btn" class="fui-btn">
+                    <button id="run-intel-btn" class="fui-btn fui-btn-full-mobile">
                         ⚡ RUN LOCAL ANALYSIS ENGINE
                     </button>
                 </div>
@@ -82,7 +82,7 @@ const IntelligencePage = {
                 <div style="color:var(--hud-green); font-size:14px; margin-bottom:8px;">
                     <span class="status-dot-green"></span> LOCAL LLM & HYBRID RETRIEVAL EXECUTION IN PROGRESS...
                 </div>
-                <div style="font-size:11px; color:var(--text-muted);">
+                <div style="font-size:11px; color:var(--text-muted); word-break:break-word;">
                     LanceDB vector search -> SQLite graph context -> Local Gemma-4 inference...
                 </div>
             </div>

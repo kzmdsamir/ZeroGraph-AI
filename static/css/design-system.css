@@ -51,6 +51,7 @@ body {
     letter-spacing: 0.02em;
     line-height: 1.5;
     height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     user-select: none;
     -webkit-font-smoothing: antialiased;
@@ -61,6 +62,7 @@ body {
     line-height: 1.65 !important;
     letter-spacing: 0.2px !important;
     padding: 2px 0;
+    word-break: break-word;
 }
 
 /* Outer App Grid */
@@ -68,6 +70,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    height: 100dvh;
     width: 100vw;
     background: radial-gradient(circle at 50% 0%, #0d0d0d 0%, #050505 100%);
     position: relative;
@@ -79,7 +82,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 40px;
+    height: 42px;
     padding: 0 16px;
     background: #040404;
     border-bottom: 1px solid var(--border-color);
@@ -87,12 +90,13 @@ body {
     text-transform: uppercase;
     color: var(--text-muted);
     z-index: 100;
+    flex-shrink: 0;
 }
 
 .top-bar-left {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
 }
 
 .brand-tag {
@@ -101,6 +105,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    font-size: 12px;
 }
 
 .brand-dot {
@@ -115,7 +120,7 @@ body {
 .top-bar-right {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
 }
 
 /* Micro-Animated Indicators */
@@ -365,6 +370,20 @@ body {
     margin-top: 2px;
 }
 
+/* Form & KPI Responsive Grids */
+.fui-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.fui-form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
 /* Search Box */
 .fui-search-box {
     display: flex;
@@ -380,6 +399,7 @@ body {
     color: var(--text-muted);
     margin-right: 10px;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .fui-input {
@@ -440,6 +460,7 @@ body {
     background: var(--bg-panel);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    width: 100%;
 }
 
 .fui-table {
@@ -447,7 +468,7 @@ body {
     border-collapse: collapse;
     font-size: 12px;
     text-align: left;
-    min-width: 600px;
+    min-width: 580px;
 }
 
 .fui-table th {
@@ -620,6 +641,7 @@ body {
     transition: all 0.15s ease;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     min-height: 38px;
 }
@@ -644,6 +666,7 @@ body {
     transition: all 0.15s ease;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     min-height: 36px;
 }
@@ -665,6 +688,7 @@ body {
     transition: all 0.15s ease;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     min-height: 32px;
 }
@@ -692,8 +716,9 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(4px);
+    height: 100dvh;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
     z-index: 998;
     opacity: 0;
     transition: opacity 0.25s ease;
@@ -753,6 +778,7 @@ body {
     .top-status-bar {
         padding: 0 10px;
         font-size: 10px;
+        height: 42px;
     }
 
     .desktop-only {
@@ -781,40 +807,51 @@ body {
         position: relative;
     }
 
-    /* Off-Canvas Slide-Over Left Sidebar */
+    /* Off-Canvas Slide-Over Left Sidebar (Zero Bleed-Through) */
     .sidebar-panel {
         position: fixed;
-        top: 40px;
-        left: -290px;
+        top: 42px;
+        left: 0;
         width: 280px;
-        height: calc(100vh - 40px);
+        max-width: 85vw;
+        height: calc(100vh - 42px);
+        height: calc(100dvh - 42px);
         z-index: 1000;
-        box-shadow: 10px 0 30px rgba(0,0,0,0.8);
-        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.9);
+        transform: translateX(-100%);
+        visibility: hidden;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s ease;
         border-right: 1px solid var(--border-bright);
+        background: #090909;
     }
 
     .mobile-nav-active .sidebar-panel {
-        left: 0;
+        transform: translateX(0);
+        visibility: visible;
     }
 
     /* Off-Canvas Slide-Over Right Detail Panel */
     .detail-panel {
         position: fixed;
-        top: 40px;
-        right: -100%;
+        top: 42px;
+        right: 0;
         width: 320px;
         max-width: 88vw;
-        height: calc(100vh - 40px);
+        height: calc(100vh - 42px);
+        height: calc(100dvh - 42px);
         z-index: 1000;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.8);
-        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -10px 0 30px rgba(0,0,0,0.9);
+        transform: translateX(100%);
+        visibility: hidden;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s ease;
         border-left: 1px solid var(--border-bright);
         display: flex !important;
+        background: #090909;
     }
 
     .mobile-detail-active .detail-panel {
-        right: 0;
+        transform: translateX(0);
+        visibility: visible;
     }
 
     /* Backdrop display when drawer open */
@@ -845,16 +882,26 @@ body {
     }
 
     /* KPI Cards on Mobile: 2-Columns */
-    div[style*="grid-template-columns: repeat(4, 1fr)"],
-    div[style*="grid-template-columns: repeat(3, 1fr)"],
-    div[style*="grid-template-columns: 1fr 1fr"] {
+    .fui-kpi-grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 10px !important;
+    }
+
+    /* Form Grids on Mobile: Stack Vertically */
+    .fui-form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    .fui-btn-full-mobile {
+        width: 100% !important;
     }
 
     .fui-search-box {
         padding: 8px 10px;
         font-size: 12px;
+        flex-wrap: wrap;
+        gap: 6px;
     }
 
     .fui-prompt {
@@ -878,10 +925,7 @@ body {
 
 @media (max-width: 500px) {
     /* Extra Small Screen Optimization (Phones < 500px) */
-    div[style*="grid-template-columns: repeat(4, 1fr)"],
-    div[style*="grid-template-columns: repeat(3, 1fr)"],
-    div[style*="grid-template-columns: repeat(2, 1fr)"],
-    div[style*="grid-template-columns: 1fr 1fr"] {
+    .fui-kpi-grid {
         grid-template-columns: 1fr !important;
     }
 

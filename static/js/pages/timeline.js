@@ -1,7 +1,7 @@
 /**
  * Pages: Timeline, Data Quality, System Health, Analysis History, Export, Settings
  * Developer: kzsamir
- * All secondary page modules using FUI design system
+ * All secondary page modules using FUI design system (Mobile Responsive)
  */
 
 const TimelinePage = {
@@ -47,7 +47,7 @@ const QualityPage = {
             const q = res.metrics || {};
 
             container.innerHTML = `
-                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-bottom:20px;">
+                <div class="fui-form-grid" style="margin-bottom:20px;">
                     ${Components.renderKPICard('Quality Score', q.data_quality_score ? q.data_quality_score + '%' : '95%', 'HIGH COMPLETENESS')}
                     ${Components.renderKPICard('Total Messages', q.total_messages || 6914, 'FULL PARSED SET')}
                     ${Components.renderKPICard('Missing Timestamps', q.missing_timestamps || 0, 'ZERO DATA LOSS')}
@@ -84,7 +84,7 @@ const HealthPage = {
             const sec = res.security || {};
 
             container.innerHTML = `
-                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-bottom:20px;">
+                <div class="fui-form-grid" style="margin-bottom:20px;">
                     ${Components.renderKPICard('CPU Usage', (sys.cpu_usage_percent || 0) + '%', 'LOCAL HARDWARE')}
                     ${Components.renderKPICard('RAM Used', (sys.ram_used_gb || 0) + ' / ' + (sys.ram_total_gb || 32) + ' GB', (sys.ram_percent || 0) + '% UTILIZED')}
                     ${Components.renderKPICard('SQLite DB', (db.sqlite_size_mb || 0) + ' MB', (db.messages_count || 6914) + ' MESSAGES')}
@@ -95,7 +95,7 @@ const HealthPage = {
                         <span>■ LM STUDIO LOCAL ENGINE</span>
                         <span style="color:${llm.online ? 'var(--hud-green)' : 'var(--hud-red)'};">${llm.online ? '● ONLINE' : '● OFFLINE'}</span>
                     </div>
-                    <div style="font-size:12px; line-height:1.9; color:var(--text-muted);">
+                    <div style="font-size:12px; line-height:1.9; color:var(--text-muted); word-break:break-word;">
                         <div>ENDPOINT: <strong style="color:#fff;">${llm.endpoint || 'http://127.0.0.1:4321/v1'}</strong></div>
                         <div>MODEL: <strong style="color:#fff;">google/gemma-4-e4b</strong></div>
                         <div>INFERENCE_MODE: <strong style="color:var(--hud-green);">100% LOCAL / AIR-GAPPED</strong></div>
@@ -193,7 +193,7 @@ const SettingsPage = {
                     <span>■ LOCAL ENGINE & RETRIEVAL CONFIGURATION</span>
                     <span>AIR-GAPPED SYSTEM</span>
                 </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                <div class="fui-form-grid" style="gap:16px;">
                     <div>
                         <div class="filter-label" style="margin-bottom:6px;">LM STUDIO ENDPOINT</div>
                         <input type="text" class="fui-input" style="background:#080808; border:1px solid var(--border-highlight); padding:10px; width:100%;" value="http://127.0.0.1:4321/v1" readonly>
