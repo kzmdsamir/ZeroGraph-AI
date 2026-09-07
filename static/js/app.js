@@ -1,7 +1,7 @@
 /**
  * ZeroGraph AI — SPA Router & FUI Command Center Orchestrator
  * Developer: kzsamir
- * Direct Navigation Router with Animated Icon Integration & Search Bindings
+ * Robust Hash-Based SPA Navigation Router
  */
 
 const App = {
@@ -20,9 +20,16 @@ const App = {
         'settings': { title: 'Engine Settings', subtitle: 'LOCAL MODEL & RETRIEVAL WEIGHT CONFIGURATION', module: SettingsPage }
     },
 
+    currentRoute: null,
+
     init() {
+        // Listen to browser hash changes
         window.addEventListener('hashchange', () => this.handleRouting());
+
+        // Handle initial routing load
         this.handleRouting();
+
+        // Background telemetry & search bindings
         this.updateTelemetry();
         this.bindGlobalSearch();
         setInterval(() => this.updateTelemetry(), 15000);
@@ -30,8 +37,11 @@ const App = {
 
     navigateTo(routeKey) {
         if (!this.routes[routeKey]) routeKey = 'executive';
-        window.location.hash = `#${routeKey}`;
-        this.handleRouting();
+        if (window.location.hash === `#${routeKey}`) {
+            this.handleRouting();
+        } else {
+            window.location.hash = `#${routeKey}`;
+        }
     },
 
     handleRouting() {
@@ -40,29 +50,36 @@ const App = {
             hash = 'executive';
         }
 
+        this.currentRoute = hash;
         const routeConfig = this.routes[hash];
 
+        // Update header page titles
         const titleEl = document.getElementById('current-page-title');
         const subTitleEl = document.getElementById('current-page-subtitle');
 
         if (titleEl) titleEl.textContent = routeConfig.title;
         if (subTitleEl) subTitleEl.textContent = routeConfig.subtitle;
 
-        // Active sidebar navigation button state
+        // Update active sidebar link styling
         document.querySelectorAll('.nav-item').forEach(el => {
-            if (el.getAttribute('data-route') === hash) {
+            const route = el.getAttribute('data-route');
+            if (route === hash) {
                 el.classList.add('active');
             } else {
                 el.classList.remove('active');
             }
         });
 
-        // Render page view module safely
+        // Safely render the active page module
         if (routeConfig.module && typeof routeConfig.module.render === 'function') {
             try {
                 routeConfig.module.render();
             } catch (err) {
-                console.error(`Error rendering page ${hash}:`, err);
+                console.error(`[Router Error] Failed rendering module for route #${hash}:`, err);
+                const container = document.getElementById('page-content');
+                if (container) {
+                    container.innerHTML = `<div style="color:var(--hud-red); padding:30px;">ROUTER RENDER ERROR ON PAGE #${hash}</div>`;
+                }
             }
         }
     },
@@ -104,7 +121,7 @@ const App = {
                                     IntelligencePage.executeAnalysis();
                                 }
                             }
-                        }, 100);
+                        }, 150);
                     }
                 }
             });
