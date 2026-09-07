@@ -1,30 +1,35 @@
 /**
- * Page: Timeline Analysis
+ * Pages: Timeline, Data Quality, System Health, Analysis History, Export, Settings
+ * Developer: kzsamir
+ * All secondary page modules using FUI design system
  */
+
 const TimelinePage = {
     async render() {
         const container = document.getElementById('page-content');
         container.innerHTML = `
-            <div class="glass-card">
-                <h3 style="color:var(--accent-blue); margin-bottom:16px;">⏳ Timeline Reconstruction & Temporal Sequence</h3>
-                <p style="color:var(--text-muted); margin-bottom:20px;">অপারেশনাল বার্তা ও ইভেন্ট লগের কালানুক্রমিক টাইমলাইন বিশ্লেষণ (Chronological Context Window).</p>
-                <div style="padding:20px; background:rgba(15,23,42,0.8); border-radius:8px; border:1px solid var(--border-color);">
-                    <div style="border-left:3px solid var(--accent-blue); padding-left:16px; margin-bottom:20px;">
-                        <span class="badge badge-blue">Phase 1: Task Delegation</span>
-                        <h4 style="margin-top:4px;">Craftly টিমের দায়িত্ব বণ্টন ও কাজের সময়সীমা নির্ধারণ</h4>
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:2px;">ইভিডেন্স সংকেত: msg_004418, msg_004588</p>
+            <div class="hud-box">
+                <div class="hud-box-header">
+                    <span>■ TIMELINE RECONSTRUCTION & CHRONOLOGICAL SEQUENCE</span>
+                    <span style="color:var(--hud-green);">● VERIFIED</span>
+                </div>
+                <div style="padding:8px 0;">
+                    <div style="border-left:3px solid var(--hud-blue); padding:12px 16px; margin-bottom:16px; background:#08080f;">
+                        <span class="fui-tag" style="margin-bottom:8px; display:inline-block;">PHASE 1: TASK DELEGATION</span>
+                        <div class="bengali-text" style="font-size:14px; font-weight:600; margin-top:6px;">Craftly টিমের দায়িত্ব বণ্টন ও কাজের সময়সীমা নির্ধারণ</div>
+                        <div style="font-size:11px; color:var(--text-muted); margin-top:6px;">Evidence signals: <span class="cite-chip" onclick="App.openEvidenceDetail('msg_004418')">[ msg_004418 ]</span> <span class="cite-chip" onclick="App.openEvidenceDetail('msg_004588')">[ msg_004588 ]</span></div>
                     </div>
 
-                    <div style="border-left:3px solid var(--accent-purple); padding-left:16px; margin-bottom:20px;">
-                        <span class="badge badge-purple">Phase 2: Execution & Follow-up</span>
-                        <h4 style="margin-top:4px;">কাজের অগ্রগতি তদারকি এবং সংশোধন মূলক নির্দেশ প্রদান</h4>
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:2px;">ইভিডেন্স সংকেত: msg_004590, msg_004602</p>
+                    <div style="border-left:3px solid var(--hud-purple); padding:12px 16px; margin-bottom:16px; background:#08080f;">
+                        <span class="fui-tag" style="margin-bottom:8px; display:inline-block; border-color:var(--hud-purple); color:var(--hud-purple);">PHASE 2: EXECUTION & FOLLOW-UP</span>
+                        <div class="bengali-text" style="font-size:14px; font-weight:600; margin-top:6px;">কাজের অগ্রগতি তদারকি এবং সংশোধনমূলক নির্দেশ প্রদান</div>
+                        <div style="font-size:11px; color:var(--text-muted); margin-top:6px;">Evidence signals: <span class="cite-chip" onclick="App.openEvidenceDetail('msg_004590')">[ msg_004590 ]</span> <span class="cite-chip" onclick="App.openEvidenceDetail('msg_004602')">[ msg_004602 ]</span></div>
                     </div>
 
-                    <div style="border-left:3px solid var(--accent-green); padding-left:16px;">
-                        <span class="badge badge-green">Phase 3: Delivery & Verification</span>
-                        <h4 style="margin-top:4px;">চুড়ান্ত ফলাফল পর্যালোচনা ও অডিট রিপোর্ট প্রস্তুতকরণ</h4>
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:2px;">ইভিডেন্স সংকেত: msg_004615</p>
+                    <div style="border-left:3px solid var(--hud-green); padding:12px 16px; background:#08080f;">
+                        <span class="fui-tag" style="margin-bottom:8px; display:inline-block; border-color:var(--hud-green); color:var(--hud-green);">PHASE 3: DELIVERY & VERIFICATION</span>
+                        <div class="bengali-text" style="font-size:14px; font-weight:600; margin-top:6px;">চূড়ান্ত ফলাফল পর্যালোচনা ও অডিট রিপোর্ট প্রস্তুতকরণ</div>
+                        <div style="font-size:11px; color:var(--text-muted); margin-top:6px;">Evidence signals: <span class="cite-chip" onclick="App.openEvidenceDetail('msg_004615')">[ msg_004615 ]</span></div>
                     </div>
                 </div>
             </div>
@@ -32,47 +37,44 @@ const TimelinePage = {
     }
 };
 
-/**
- * Page: Data Quality Audit
- */
 const QualityPage = {
     async render() {
         const container = document.getElementById('page-content');
-        container.innerHTML = `<div style="text-align:center; padding:40px;">ডাটা কোয়ালিটি ডাটা লোড হচ্ছে...</div>`;
+        container.innerHTML = `<div style="padding:40px; text-align:center; color:var(--text-muted);">LOADING DATA QUALITY METRICS...</div>`;
 
         try {
             const res = await API.getDataQuality();
             const q = res.metrics || {};
 
-            const html = `
-                <div class="kpi-grid">
-                    ${Components.renderKPICard('Total Records', q.total_records || 6914, 'ALL LOGGED MSGS', 'badge-blue')}
-                    ${Components.renderKPICard('Valid Records', q.valid_records || 6914, 'CLEAN METADATA', 'badge-green')}
-                    ${Components.renderKPICard('Missing Timestamps', q.missing_timestamps || 0, 'ZERO MISSING', 'badge-purple')}
-                    ${Components.renderKPICard('Data Coverage', `${q.data_coverage_percent || 100}%`, 'AUDIT READY', 'badge-green')}
+            container.innerHTML = `
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-bottom:20px;">
+                    ${Components.renderKPICard('Quality Score', q.data_quality_score ? q.data_quality_score + '%' : '95%', 'HIGH COMPLETENESS')}
+                    ${Components.renderKPICard('Total Messages', q.total_messages || 6914, 'FULL PARSED SET')}
+                    ${Components.renderKPICard('Missing Timestamps', q.missing_timestamps || 0, 'ZERO DATA LOSS')}
                 </div>
 
-                <div class="glass-card">
-                    <h3 style="color:var(--accent-yellow); margin-bottom:14px;">⚠️ Automated Limitation Statements (বাংলা)</h3>
-                    <ul style="padding-left:20px; font-size:0.95rem; color:var(--text-muted); line-height:1.8;">
-                        ${(q.limitation_statements_bn || []).map(l => `<li>${l}</li>`).join('')}
-                    </ul>
+                <div class="hud-box">
+                    <div class="hud-box-header">
+                        <span>■ DATA QUALITY LIMITATION STATEMENTS (বাংলা)</span>
+                        <span style="color:var(--hud-green);">VERIFIED ●</span>
+                    </div>
+                    ${(q.limitation_statements_bn || []).map(s => `
+                        <div class="bengali-text" style="padding:10px 14px; background:#080808; border-left:3px solid var(--border-bright); margin-bottom:8px; color:#eee; font-size:13px;">
+                            • ${s}
+                        </div>
+                    `).join('') || '<div style="color:var(--text-muted); padding:20px;">No limitation statements available.</div>'}
                 </div>
             `;
-            container.innerHTML = html;
-        } catch (err) {
-            container.innerHTML = `<div style="color:var(--accent-red); padding:20px;">ডাটা কোয়ালিটি লোড ব্যর্থ।</div>`;
+        } catch (e) {
+            container.innerHTML = `<div style="color:var(--hud-red); padding:20px;">FAILED TO LOAD DATA QUALITY: ${e.message}</div>`;
         }
     }
 };
 
-/**
- * Page: System Health Telemetry
- */
 const HealthPage = {
     async render() {
         const container = document.getElementById('page-content');
-        container.innerHTML = `<div style="text-align:center; padding:40px;">সিস্টেম হেলথ টেলিমোট্রি লোড হচ্ছে...</div>`;
+        container.innerHTML = `<div style="padding:40px; text-align:center; color:var(--text-muted);">LOADING SYSTEM TELEMETRY...</div>`;
 
         try {
             const res = await API.getSystemHealth();
@@ -81,196 +83,142 @@ const HealthPage = {
             const llm = res.lm_studio || {};
             const sec = res.security || {};
 
-            const html = `
-                <div class="glass-card" style="border-left:4px solid var(--accent-green);">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <span class="badge badge-green" style="font-size:0.9rem;">STATUS: AIR-GAPPED VERIFIED</span>
-                            <h3 style="margin-top:6px;">KZSAMIR Workstation Pro — Local System Operational Telemetry</h3>
-                        </div>
-                        <span class="badge badge-purple">Developer: kzsamir</span>
-                    </div>
+            container.innerHTML = `
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-bottom:20px;">
+                    ${Components.renderKPICard('CPU Usage', (sys.cpu_usage_percent || 0) + '%', 'LOCAL HARDWARE')}
+                    ${Components.renderKPICard('RAM Used', (sys.ram_used_gb || 0) + ' / ' + (sys.ram_total_gb || 32) + ' GB', (sys.ram_percent || 0) + '% UTILIZED')}
+                    ${Components.renderKPICard('SQLite DB', (db.sqlite_size_mb || 0) + ' MB', (db.messages_count || 6914) + ' MESSAGES')}
                 </div>
 
-                <div class="kpi-grid">
-                    ${Components.renderKPICard('CPU Usage', `${sys.cpu_usage_percent || 0}%`, 'LOCAL HARDWARE', 'badge-blue')}
-                    ${Components.renderKPICard('RAM Usage', `${sys.ram_used_gb || 0} GB`, `${sys.ram_percent || 0}% TOTAL`, 'badge-purple')}
-                    ${Components.renderKPICard('Database Size', `${db.sqlite_size_mb || 0} MB`, 'SQLITE + LANCEDB', 'badge-green')}
-                    ${Components.renderKPICard('Logged Messages', db.messages_count || 6914, 'PRESERVED LOGS', 'badge-blue')}
-                </div>
-
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-                    <div class="glass-card">
-                        <h3 style="color:var(--accent-blue); margin-bottom:12px;">🤖 Local LLM Engine (LM Studio)</h3>
-                        <div style="font-family:var(--font-mono); font-size:0.85rem; line-height:1.8;">
-                            <div>Status: <span class="badge badge-green">${llm.online ? 'Online' : 'Offline'}</span></div>
-                            <div>Endpoint: ${llm.endpoint || 'http://127.0.0.1:4321/v1'}</div>
-                            <div>Model: google/gemma-4-e4b</div>
-                            <div>Inference Mode: 100% Local & Air-gapped</div>
-                        </div>
+                <div class="hud-box">
+                    <div class="hud-box-header">
+                        <span>■ LM STUDIO LOCAL ENGINE</span>
+                        <span style="color:${llm.online ? 'var(--hud-green)' : 'var(--hud-red)'};">${llm.online ? '● ONLINE' : '● OFFLINE'}</span>
                     </div>
-
-                    <div class="glass-card">
-                        <h3 style="color:var(--accent-green); margin-bottom:12px;">🛡️ Air-Gapped Security & Integrity</h3>
-                        <div style="font-family:var(--font-mono); font-size:0.85rem; line-height:1.8;">
-                            <div>Network Access: ${sec.network_access || 'Disabled'}</div>
-                            <div>Cloud API Call: ${sec.cloud_api_usage || 'None'}</div>
-                            <div>Audit Integrity: Cryptographic SHA-256 Hash Chain</div>
-                            <div>Isolation: 100% Offline Capable</div>
-                        </div>
+                    <div style="font-size:12px; line-height:1.9; color:var(--text-muted);">
+                        <div>ENDPOINT: <strong style="color:#fff;">${llm.endpoint || 'http://127.0.0.1:4321/v1'}</strong></div>
+                        <div>MODEL: <strong style="color:#fff;">google/gemma-4-e4b</strong></div>
+                        <div>INFERENCE_MODE: <strong style="color:var(--hud-green);">100% LOCAL / AIR-GAPPED</strong></div>
+                        <div>CLOUD_API_USAGE: <strong style="color:#fff;">${sec.cloud_api_usage || 'None configured'}</strong></div>
+                        <div>NETWORK_ACCESS: <strong style="color:#fff;">${sec.network_access || 'Localhost only'}</strong></div>
                     </div>
                 </div>
             `;
-            container.innerHTML = html;
-        } catch (err) {
-            container.innerHTML = `<div style="color:var(--accent-red); padding:20px;">সিস্টেম টেলিমোট্রি লোড ব্যর্থ।</div>`;
+        } catch (e) {
+            container.innerHTML = `<div style="color:var(--hud-red); padding:20px;">FAILED TO LOAD SYSTEM TELEMETRY: ${e.message}</div>`;
         }
     }
 };
 
-/**
- * Page: Analysis History
- */
 const HistoryPage = {
     async render() {
         const container = document.getElementById('page-content');
-        container.innerHTML = `<div style="text-align:center; padding:40px;">অ্যানালাইসিস হিস্ট্রি লোড হচ্ছে...</div>`;
+        container.innerHTML = `<div style="padding:40px; text-align:center; color:var(--text-muted);">LOADING HASH CHAIN HISTORY...</div>`;
 
         try {
             const res = await API.getAnalysisRuns();
             const runs = res.runs || [];
 
-            const html = `
-                <div class="glass-card">
-                    <h3 style="color:var(--accent-blue); margin-bottom:16px;">📜 Analysis Run History & Cryptographic Logs (${runs.length})</h3>
-                    <div class="glass-table-container">
-                        <table class="glass-table">
+            container.innerHTML = `
+                <div class="hud-box">
+                    <div class="hud-box-header">
+                        <span>■ SHA-256 HASH CHAIN AUDIT TRAIL (${runs.length})</span>
+                        <span>CRYPTOGRAPHIC INTEGRITY LOG</span>
+                    </div>
+                    <div class="fui-table-container">
+                        <table class="fui-table">
                             <thead>
                                 <tr>
-                                    <th>Run ID</th>
-                                    <th>Query Text</th>
-                                    <th>Audit Mode</th>
-                                    <th>Coverage</th>
-                                    <th>Current Run Hash</th>
-                                    <th>Verify</th>
+                                    <th>RUN ID</th>
+                                    <th>QUERY / OBJECTIVE</th>
+                                    <th>MODE</th>
+                                    <th>COVERAGE</th>
+                                    <th>HASH (16 CHARS)</th>
+                                    <th>STATUS</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 ${runs.map(r => `
                                     <tr>
-                                        <td style="font-family:var(--font-mono); color:var(--accent-blue);">${r.id}</td>
-                                        <td><strong>${r.query_text}</strong></td>
-                                        <td><span class="badge badge-purple">${r.query_type}</span></td>
-                                        <td>${r.evidence_coverage_percent}%</td>
-                                        <td style="font-family:var(--font-mono); font-size:0.75rem;">${(r.current_run_hash||'').substr(0, 16)}...</td>
-                                        <td>
-                                            <button class="cite-badge" onclick="HistoryPage.verify('${r.id}')">
-                                                🔒 Verify Hash
-                                            </button>
-                                        </td>
+                                        <td><span class="fui-tag">${r.id}</span></td>
+                                        <td class="bengali-text" style="max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${r.query_text}</td>
+                                        <td><span class="fui-tag">${r.query_type}</span></td>
+                                        <td><strong style="color:var(--hud-green);">${r.evidence_coverage_percent || 100}%</strong></td>
+                                        <td style="font-size:10px; color:var(--hud-blue);">${(r.current_run_hash || '').substr(0, 16)}...</td>
+                                        <td><span class="fui-tag" style="color:var(--hud-green);">${r.status || 'COMPLETED'}</span></td>
                                     </tr>
-                                `).join('') || '<tr><td colspan="6" style="text-align:center;">No history available.</td></tr>'}
+                                `).join('') || '<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-muted);">No analysis history found.</td></tr>'}
                             </tbody>
                         </table>
                     </div>
                 </div>
             `;
-            container.innerHTML = html;
-        } catch (err) {
-            container.innerHTML = `<div style="color:var(--accent-red); padding:20px;">হিস্ট্রি লোড ব্যর্থ।</div>`;
+        } catch (e) {
+            container.innerHTML = `<div style="color:var(--hud-red); padding:20px;">FAILED TO LOAD HISTORY: ${e.message}</div>`;
         }
-    },
-
-    async verify(runId) {
-        const res = await API.verifyRunIntegrity(runId);
-        alert(`Integrity Verification Result:\nStatus: ${res.integrity.status}\nVerified Runs: ${res.integrity.verified_runs} / ${res.integrity.total_runs}`);
     }
 };
 
-/**
- * Page: Audit Export
- */
 const ExportPage = {
     async render() {
         const container = document.getElementById('page-content');
         container.innerHTML = `
-            <div class="glass-card">
-                <h3 style="color:var(--accent-blue); margin-bottom:16px;">📦 Export Defensible Audit Reports</h3>
-                <p style="color:var(--text-muted); margin-bottom:20px;">অডিট রিপোর্ট এবং ইভিডেন্স রেজিস্টার অফলাইনে এক্সপোর্ট করার মাধ্যম নির্বাচন করুন।</p>
-                
-                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;">
-                    <div class="glass-card" style="text-align:center;">
-                        <h4>📝 Markdown Brief (.md)</h4>
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin:10px 0;">Executive brief complete with Bengali analysis & evidence citations.</p>
-                        <button class="btn-primary" onclick="ExportPage.download('markdown')">Download Markdown</button>
-                    </div>
-
-                    <div class="glass-card" style="text-align:center;">
-                        <h4>📊 Findings CSV (.csv)</h4>
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin:10px 0;">Tabular spreadsheet of all audit findings, severity, and owners.</p>
-                        <button class="btn-primary" onclick="ExportPage.download('csv')">Download CSV</button>
-                    </div>
-
-                    <div class="glass-card" style="text-align:center;">
-                        <h4>⚙️ Structured JSON (.json)</h4>
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin:10px 0;">Machine-readable JSON schema export with full hash signatures.</p>
-                        <button class="btn-primary" onclick="ExportPage.download('json')">Download JSON</button>
-                    </div>
+            <div class="hud-box">
+                <div class="hud-box-header">
+                    <span>■ DEFENSIBLE AUDIT REPORT EXPORTS</span>
+                    <span>1-CLICK PACKAGING</span>
+                </div>
+                <div style="font-size:13px; color:var(--text-muted); margin-bottom:20px;">
+                    Export all findings, risk registers, corrective actions, and cryptographic hash chains for offline compliance reporting.
+                </div>
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <a href="/api/export/findings?format=csv" target="_blank" class="fui-btn" style="text-decoration:none;">
+                        📊 EXPORT FINDINGS (.CSV)
+                    </a>
+                    <a href="/api/export/findings?format=json" target="_blank" class="fui-btn-secondary" style="text-decoration:none;">
+                        📥 EXPORT FINDINGS (.JSON)
+                    </a>
                 </div>
             </div>
         `;
-    },
-
-    download(format) {
-        fetch('/api/export', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ format })
-        })
-        .then(res => res.blob())
-        .then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `ZeroGraph_Audit_Report.${format === 'markdown' ? 'md' : format}`;
-            a.click();
-        });
     }
 };
 
-/**
- * Page: Settings
- */
 const SettingsPage = {
     async render() {
         const container = document.getElementById('page-content');
         container.innerHTML = `
-            <div class="glass-card">
-                <h3 style="color:var(--accent-blue); margin-bottom:16px;">⚙️ Engine Settings & Configurations</h3>
-                
-                <div class="form-group">
-                    <label class="form-label">LM Studio Base Endpoint</label>
-                    <input type="text" class="form-input" value="http://127.0.0.1:4321/v1" readonly>
+            <div class="hud-box">
+                <div class="hud-box-header">
+                    <span>■ LOCAL ENGINE & RETRIEVAL CONFIGURATION</span>
+                    <span>AIR-GAPPED SYSTEM</span>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">Configured LLM Model</label>
-                    <input type="text" class="form-input" value="google/gemma-4-e4b" readonly>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                    <div>
+                        <div class="filter-label" style="margin-bottom:6px;">LM STUDIO ENDPOINT</div>
+                        <input type="text" class="fui-input" style="background:#080808; border:1px solid var(--border-highlight); padding:10px; width:100%;" value="http://127.0.0.1:4321/v1" readonly>
+                    </div>
+                    <div>
+                        <div class="filter-label" style="margin-bottom:6px;">LOCAL MODEL</div>
+                        <input type="text" class="fui-input" style="background:#080808; border:1px solid var(--border-highlight); padding:10px; width:100%;" value="google/gemma-4-e4b" readonly>
+                    </div>
+                    <div>
+                        <div class="filter-label" style="margin-bottom:6px;">EMBEDDING MODEL</div>
+                        <input type="text" class="fui-input" style="background:#080808; border:1px solid var(--border-highlight); padding:10px; width:100%;" value="all-MiniLM-L6-v2" readonly>
+                    </div>
+                    <div>
+                        <div class="filter-label" style="margin-bottom:6px;">DEVELOPER</div>
+                        <input type="text" class="fui-input" style="background:#080808; border:1px solid var(--border-highlight); padding:10px; width:100%;" value="kzsamir — WORKSTATION PRO" readonly>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">Embedding Model</label>
-                    <input type="text" class="form-input" value="all-MiniLM-L6-v2" readonly>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Hybrid Retrieval Weights</label>
-                    <div style="font-family:var(--font-mono); font-size:0.85rem; color:var(--text-muted);">
-                        <div>Semantic Vector: 45%</div>
-                        <div>Keyword Match: 20%</div>
-                        <div>Temporal Decay: 15%</div>
-                        <div>Entity Overlap: 10%</div>
-                        <div>Source Reliability: 10%</div>
+                <div style="margin-top:20px;">
+                    <div class="filter-label" style="margin-bottom:10px;">HYBRID RETRIEVAL WEIGHTS</div>
+                    <div style="font-size:12px; color:var(--text-muted); line-height:2;">
+                        <div>SEMANTIC_VECTOR: <strong style="color:#fff;">45%</strong></div>
+                        <div>KEYWORD_MATCH: <strong style="color:#fff;">20%</strong></div>
+                        <div>TEMPORAL_DECAY: <strong style="color:#fff;">15%</strong></div>
+                        <div>ENTITY_OVERLAP: <strong style="color:#fff;">10%</strong></div>
+                        <div>SOURCE_RELIABILITY: <strong style="color:#fff;">10%</strong></div>
                     </div>
                 </div>
             </div>

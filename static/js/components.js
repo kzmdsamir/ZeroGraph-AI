@@ -213,10 +213,10 @@ const Components = {
     // Live update action item status in SQLite via REST API
     async updateActionStatus(actionDbId, newStatus) {
         try {
-            await API.updateActionStatus(actionDbId, newStatus, 'Status updated via live command queue');
-            alert(`Action ${actionDbId} status updated to ${newStatus}`);
+            await API.updateAction(actionDbId, { status: newStatus });
+            console.log(`Action ${actionDbId} status updated to ${newStatus}`);
         } catch (e) {
-            // Fallback status notification
+            console.warn('Status update failed:', e.message);
         }
     },
 
