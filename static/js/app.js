@@ -1,7 +1,7 @@
 /**
  * ZeroGraph AI — SPA Router & FUI Command Center Orchestrator
  * Developer: kzsamir
- * Robust Hash-Based SPA Navigation Router
+ * Mobile Responsive SPA Router & Command Center
  */
 
 const App = {
@@ -53,6 +53,9 @@ const App = {
         this.currentRoute = hash;
         const routeConfig = this.routes[hash];
 
+        // Close mobile drawers on navigation
+        this.closeMobileOverlays();
+
         // Update header page titles
         const titleEl = document.getElementById('current-page-title');
         const subTitleEl = document.getElementById('current-page-subtitle');
@@ -84,17 +87,45 @@ const App = {
         }
     },
 
+    toggleMobileNav() {
+        const app = document.getElementById('app');
+        if (app) {
+            app.classList.toggle('mobile-nav-active');
+            app.classList.remove('mobile-detail-active');
+        }
+    },
+
     toggleDetailPanel() {
+        const app = document.getElementById('app');
         const grid = document.getElementById('main-workspace-grid');
-        if (grid) {
+        
+        if (window.innerWidth <= 900) {
+            if (app) {
+                app.classList.toggle('mobile-detail-active');
+                app.classList.remove('mobile-nav-active');
+            }
+        } else if (grid) {
             grid.classList.toggle('panel-collapsed');
         }
     },
 
+    closeMobileOverlays() {
+        const app = document.getElementById('app');
+        if (app) {
+            app.classList.remove('mobile-nav-active');
+            app.classList.remove('mobile-detail-active');
+        }
+    },
+
     ensureDetailPanelOpen() {
-        const grid = document.getElementById('main-workspace-grid');
-        if (grid && grid.classList.contains('panel-collapsed')) {
-            grid.classList.remove('panel-collapsed');
+        if (window.innerWidth <= 900) {
+            const app = document.getElementById('app');
+            if (app) app.classList.add('mobile-detail-active');
+        } else {
+            const grid = document.getElementById('main-workspace-grid');
+            if (grid && grid.classList.contains('panel-collapsed')) {
+                grid.classList.remove('panel-collapsed');
+            }
         }
     },
 

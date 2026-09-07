@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ZeroGraph AI — KZSAMIR Workstation Pro Command Center</title>
     <meta name="description" content="100% Air-Gapped Local Operational Intelligence & Evidence Audit Command Center">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/design-system.css') }}">
@@ -12,20 +12,25 @@
         <!-- Top FUI Status Header -->
         <header class="top-status-bar">
             <div class="top-bar-left">
+                <button class="fui-btn-icon mobile-only-btn" id="mobile-nav-toggle-btn" onclick="App.toggleMobileNav()" title="Toggle Navigation Menu">
+                    <svg class="fui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                    <span>NAV</span>
+                </button>
+
                 <div class="brand-tag">
                     <span class="brand-dot"></span> ZEROGRAPH_AI
                 </div>
-                <span style="color: var(--text-dim);">|</span>
-                <span>OPERATIONAL_AUDIT</span>
-                <span style="color: var(--text-dim);">|</span>
-                <span style="color: var(--hud-green);">DEV: KZSAMIR</span>
+                <span class="desktop-only" style="color: var(--text-dim);">|</span>
+                <span class="desktop-only">OPERATIONAL_AUDIT</span>
+                <span class="desktop-only" style="color: var(--text-dim);">|</span>
+                <span class="hud-dev-tag" style="color: var(--hud-green);">DEV: KZSAMIR</span>
             </div>
 
             <div class="top-bar-right">
-                <div>NETWORK: <strong style="color:#fff;">HUB-LOCAL</strong></div>
-                <span style="color: var(--text-dim);">|</span>
-                <div>TOTAL_EVIDENCE: <strong style="color:#fff;">6,914 / 6,914</strong></div>
-                <span style="color: var(--text-dim);">|</span>
+                <div class="desktop-only">NETWORK: <strong style="color:#fff;">HUB-LOCAL</strong></div>
+                <span class="desktop-only" style="color: var(--text-dim);">|</span>
+                <div class="desktop-only">TOTAL_EVIDENCE: <strong style="color:#fff;">6,914 / 6,914</strong></div>
+                <span class="desktop-only" style="color: var(--text-dim);">|</span>
                 <div id="lm-studio-status-pill">
                     <span class="status-dot-green"></span>
                     <span id="telemetry-model-name" style="color:#fff;">LIVE_CORE_ACTIVE</span>
@@ -33,7 +38,7 @@
                 <span style="color: var(--text-dim);">|</span>
                 <button class="fui-btn-icon" id="toggle-panel-btn" onclick="App.toggleDetailPanel()" title="Toggle Right Detail Panel">
                     <svg class="fui-icon icon-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                    TOGGLE PANEL
+                    <span class="btn-text">TOGGLE PANEL</span>
                 </button>
             </div>
         </header>
@@ -41,8 +46,11 @@
         <!-- Main 3-Column Command Center Workspace -->
         <div class="workspace-grid" id="main-workspace-grid">
             
+            <!-- Mobile Backdrop Overlay -->
+            <div class="mobile-overlay" id="mobile-backdrop" onclick="App.closeMobileOverlays()"></div>
+
             <!-- Column 1: Left Navigation Sidebar (OPS_NAV) -->
-            <aside class="sidebar-panel">
+            <aside class="sidebar-panel" id="sidebar-container">
                 <div class="hud-box">
                     <div class="hud-box-header">
                         <span>■ OPS_NAV</span>
