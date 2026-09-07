@@ -1,0 +1,539 @@
+/* ==========================================================================
+   ZeroGraph AI — Sci-Fi FUI / HUD Command Center Design System
+   Developer: kzsamir
+   Style: Ultra-Clean Pitch-Black Monospace Technical FUI Interface
+   ========================================================================== */
+
+:root {
+    /* Pitch-Black FUI Palette */
+    --bg-main: #050505;
+    --bg-panel: #0a0a0a;
+    --bg-card: #0e0e0e;
+    --bg-card-hover: #141414;
+    --bg-input: #080808;
+
+    /* Border & Grid Lines */
+    --border-color: #1a1a1a;
+    --border-highlight: #282828;
+    --border-bright: #3d3d3d;
+    --grid-line: rgba(255, 255, 255, 0.04);
+
+    /* Text Colors */
+    --text-main: #f0f0f0;
+    --text-muted: #888888;
+    --text-dim: #444444;
+    --text-inverse: #000000;
+
+    /* Functional HUD Indicator Dots & Accents */
+    --hud-green: #00ff66;
+    --hud-red: #ff3344;
+    --hud-yellow: #ffcc00;
+    --hud-blue: #00aaff;
+    --hud-purple: #bb66ff;
+
+    /* Monospace Typography Stack */
+    --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
+    --font-main: var(--font-mono);
+}
+
+/* Base Reset & Layout */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* FUI Outer App Grid (Top Bar + 3 Column Layout) */
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background: radial-gradient(circle at 50% 0%, #0d0d0d 0%, #050505 100%);
+}
+
+/* Top FUI Status Header */
+.top-status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 38px;
+    padding: 0 16px;
+    background: #040404;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.brand-tag {
+    color: #ffffff;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.brand-dot {
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+    display: inline-block;
+}
+
+.top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.status-dot-green {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--hud-green);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--hud-green);
+    margin-right: 6px;
+}
+
+.status-dot-red {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--hud-red);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--hud-red);
+    margin-right: 6px;
+}
+
+/* Main 3-Column Workspace Layout */
+.workspace-grid {
+    display: grid;
+    grid-template-columns: 260px 1fr 380px;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Left Sidebar Panel (OPS_NAV) */
+.sidebar-panel {
+    background: var(--bg-panel);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.hud-box {
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    padding: 14px;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.hud-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.hud-box-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.hud-stat-row {
+    display: flex;
+    gap: 24px;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 10px;
+}
+
+.hud-stat-val {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    display: block;
+}
+
+/* Operations Nav Filter List */
+.nav-section-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin: 16px 0 8px 4px;
+    text-transform: uppercase;
+}
+
+.nav-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 12px;
+    margin-bottom: 4px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 12px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.nav-item:hover {
+    background: var(--bg-card-hover);
+    color: #ffffff;
+    border-color: var(--border-highlight);
+}
+
+.nav-item.active {
+    background: #111111;
+    color: #ffffff;
+    border: 1px solid var(--border-bright);
+    font-weight: 700;
+}
+
+.nav-tag {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.nav-item.active .nav-tag {
+    color: var(--hud-green);
+}
+
+/* Center Main Panel (Data Queue & Operations) */
+.main-panel {
+    background: var(--bg-main);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 1px solid var(--border-color);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.panel-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+}
+
+.panel-subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* FUI Search Command Line Input */
+.fui-search-box {
+    display: flex;
+    align-items: center;
+    background: #080808;
+    border: 1px solid var(--border-highlight);
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    font-family: var(--font-mono);
+}
+
+.fui-prompt {
+    color: var(--text-muted);
+    margin-right: 10px;
+    font-weight: 700;
+}
+
+.fui-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    width: 100%;
+}
+
+.fui-input::placeholder {
+    color: var(--text-dim);
+}
+
+/* Filter Controls Row */
+.filter-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.filter-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-right: 4px;
+}
+
+.filter-pill {
+    padding: 4px 10px;
+    background: #0d0d0d;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.filter-pill:hover, .filter-pill.active {
+    background: #181818;
+    color: #ffffff;
+    border-color: var(--border-bright);
+}
+
+/* HUD Data Grid Table */
+.fui-table-container {
+    border: 1px solid var(--border-color);
+    background: var(--bg-panel);
+    overflow-x: auto;
+}
+
+.fui-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+}
+
+.fui-table th {
+    padding: 10px 14px;
+    background: #080808;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-highlight);
+    border-right: 1px solid var(--grid-line);
+}
+
+.fui-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border-color);
+    border-right: 1px solid var(--grid-line);
+    color: var(--text-main);
+    vertical-align: middle;
+}
+
+.fui-table tr:hover td {
+    background: #111111;
+}
+
+.fui-table tr.selected td {
+    background: #181818;
+    border-top: 1px solid var(--border-bright);
+    border-bottom: 1px solid var(--border-bright);
+}
+
+/* Evidence Badges & Monospace Chips */
+.fui-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #121212;
+    border: 1px solid var(--border-highlight);
+    color: #ffffff;
+    font-size: 11px;
+    font-family: var(--font-mono);
+}
+
+.cite-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: #0d121c;
+    border: 1px solid #1e293b;
+    color: var(--hud-blue);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.cite-chip:hover {
+    background: #1e293b;
+    border-color: var(--hud-blue);
+    color: #ffffff;
+}
+
+/* Right Detail Sidebar Panel */
+.detail-panel {
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    padding: 18px;
+    overflow-y: auto;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 16px;
+}
+
+.detail-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-badge-white {
+    background: #ffffff;
+    color: #000000;
+    font-weight: 700;
+    padding: 3px 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.detail-content-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #e0e0e0;
+}
+
+.terminal-box {
+    background: #040404;
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    margin-top: auto;
+}
+
+.terminal-line {
+    margin-bottom: 4px;
+}
+
+.terminal-cursor {
+    display: inline-block;
+    width: 7px;
+    height: 12px;
+    background: var(--hud-green);
+    vertical-align: middle;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Buttons */
+.fui-btn {
+    padding: 8px 16px;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.fui-btn:hover {
+    background: #e0e0e0;
+}
+
+.fui-btn-secondary {
+    padding: 7px 14px;
+    background: #111111;
+    color: #ffffff;
+    border: 1px solid var(--border-highlight);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.fui-btn-secondary:hover {
+    background: #1a1a1a;
+    border-color: var(--border-bright);
+}
+
+/* Forms & Selects */
+.fui-select {
+    background: #080808;
+    border: 1px solid var(--border-highlight);
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 6px 10px;
+    outline: none;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #050505;
+}
+::-webkit-scrollbar-thumb {
+    background: #1a1a1a;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #333333;
+}
