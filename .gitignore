@@ -1,7 +1,40 @@
 # Virtual environment
 venv/
+.venv/
 
 # Python cache
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+
+# Secret & Environment files
+.env
+.env.*
+
+# Databases
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+data/*.db
+zerograph.db
+knowledge_graph.db
+
+# Vector databases
+lancedb_data/
+*.lance
+
+# Chat Data & Raw Exports
+WhatsApp Chat*.txt
+messages.jsonl
+chat.md
+*.jsonl
+
+# OS / IDE metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
