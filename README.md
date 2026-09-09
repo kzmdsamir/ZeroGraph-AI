@@ -14,6 +14,16 @@ Featuring a high-density, pitch-black **Sci-Fi FUI (Fictional User Interface) / 
 
 ---
 
+## 🖼️ Interface Showcase
+
+### 1. Executive Command Center & Evidence Queue
+![Executive Command Center & Evidence Queue](image/1.jpg)
+
+### 2. Ask Intelligence & Bengali Operational RAG Brief
+![Ask Intelligence & Bengali Operational RAG Brief](image/2.png)
+
+---
+
 ## 🚀 Key Architectural Features
 
 ### 1. 🛡️ 100% Air-Gapped Hybrid RAG Architecture
